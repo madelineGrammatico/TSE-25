@@ -1,12 +1,9 @@
 import { DEFAULT_SUM_TO_PAY } from "@/constants/product"
-import { BasketProductQuantity, MenuProduct } from "@/types/Product"
+import { BasketProductQuantity, Product } from "@/types/Product"
 import { findObjectById } from "@/utils/array"
 import { convertStringToBoolean } from "@/utils/string"
 
-export const calculateSumToPay = (
-  basket: BasketProductQuantity[],
-  menu: MenuProduct[] | undefined
-) => {
+export const calculateSumToPay = (basket: BasketProductQuantity[], menu: Product[] | undefined) => {
   if (menu === undefined) return DEFAULT_SUM_TO_PAY
 
   return basket.reduce((total, basketProductQuantity) => {

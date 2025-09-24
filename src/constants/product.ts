@@ -1,6 +1,6 @@
-import { MenuProduct } from "@/types/Product"
+import { Product } from "@/types/Product"
 
-export const EMPTY_PRODUCT: MenuProduct = {
+export const EMPTY_PRODUCT: Product = {
   id: "",
   title: "",
   imageSource: "",
@@ -9,7 +9,7 @@ export const EMPTY_PRODUCT: MenuProduct = {
   isPublicised: false,
 }
 
-export const IMAGE_COMING_SOON = "/images/coming-soon.png"
+export const IMAGE_COMING_SOON = "/images/no-photo.png"
 export const IMAGE_NO_STOCK = "/images/stock-epuise.png"
 
 export const BASKET_MESSAGE = {

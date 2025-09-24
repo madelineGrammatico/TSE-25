@@ -13,7 +13,7 @@ import { useCreateKeyboardShortcut } from "@/hooks/useCreateKeyboardShortcut"
 export default function OrderPage() {
   // state
   const { username } = useParams()
-  const { setMenu, setBasket, isModeAdmin, setIsModeAdmin, hidePanel } = useOrderContext()
+  const { setMenu, setBasket, isModeAdmin, setIsModeAdmin, hidePanel, setCategories } = useOrderContext()
   const [isModalShortcutsVisible, setIsModalShortcutsVisible] = useState(getLocalStorage("isModalShortcutsVisible") as boolean | null)
   if (isModalShortcutsVisible === null) {
     setIsModalShortcutsVisible(true)
@@ -33,7 +33,7 @@ export default function OrderPage() {
   // 3e possibilité : fall-back value (valeur de secours), nullish coalescing (opérateur de coalescence des nuls)
 
   useEffect(() => {
-    if (username) initialiseUserSession(username, setMenu, setBasket)
+    if (username) initialiseUserSession(username, setMenu, setBasket, setCategories)
   }, [])
 
   //affichage (render)

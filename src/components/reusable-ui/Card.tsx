@@ -3,19 +3,23 @@ import { theme } from "@/theme/theme"
 import Button from "./Button"
 import { TiDelete } from "react-icons/ti"
 import { fadeInFromRight, fadeInFromTop } from "@/theme/animations"
+import { Chips } from "../pages/order/Main/MainLeftSide/Menu/Chips"
 
 type CardProps = {
-  title?: string,
-  imageSource?: string,
-  leftDescription: string,
-  hasDeleteButton?: boolean,
-  onDelete?: React.MouseEventHandler<HTMLButtonElement>,
-  onClick?: React.MouseEventHandler<HTMLDivElement>,
-  isHoverable?: boolean,
-  isSelected?: boolean,
-  onAdd?: React.MouseEventHandler<HTMLButtonElement>,
-  overlapImageSource: string,
-  isOverlapImageVisible?: boolean,
+  title?: string
+  imageSource?: string
+  leftDescription: string
+  hasDeleteButton?: boolean
+  onDelete?: React.MouseEventHandler<HTMLButtonElement>
+  onClick?: React.MouseEventHandler<HTMLDivElement>
+  isHoverable?: boolean
+  isSelected?: boolean
+  isMenu?: boolean
+  onAdd?: React.MouseEventHandler<HTMLButtonElement>
+  overlapImageSource: string
+  isOverlapImageVisible?: boolean
+  categories?: any
+  oldPrice?: any
 }
 
 export default function Card({
@@ -27,13 +31,14 @@ export default function Card({
   onClick,
   isHoverable,
   isSelected,
+  isMenu,
   onAdd,
   overlapImageSource,
   isOverlapImageVisible,
-}: CardProps) {
+  categories,
+  oldPrice,
+}: any) {
   // state (vide)
-
-  // comportements (vide)
 
   // affichage
   return (
@@ -42,6 +47,8 @@ export default function Card({
       onClick={onClick}
       isHoverable={isHoverable}
       isSelected={isSelected}
+      isMenu={isMenu}
+      areChipsVisible={hasDeleteButton}
     >
       <div className="card">
         {hasDeleteButton && (
@@ -63,7 +70,10 @@ export default function Card({
         <div className="text-info">
           <div className="title">{title}</div>
           <div className="description">
-            <div className="left-description">{leftDescription}</div>
+            <div className="left-description">
+              <span className="new-price">{leftDescription}</span>
+              {oldPrice && <span className="old-price">{oldPrice}</span>}
+            </div>
             <div className="right-description">
               <Button
                 className="primary-button"
@@ -75,17 +85,23 @@ export default function Card({
           </div>
         </div>
       </div>
+      {hasDeleteButton && <Chips categories={categories} />}
     </CardStyled>
   )
 }
 
-type CardStyledProps = { isHoverable?: boolean, isSelected?: boolean }
+type CardStyledProps = any
 
 const CardStyled = styled.div<CardStyledProps>`
   ${({ isHoverable }) => isHoverable && hoverableStyle}
   border-radius: ${theme.borderRadius.extraRound};
   /* border: 1px solid red; */
-  height: 330px;
+  height: ${({ areChipsVisible }) => (areChipsVisible ? "360px" : "330px")};
+  box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
+  /* position: relative; */
+  display: flex;
+  flex-direction: column;
+  width: 240px;
 
   .card {
     background: ${theme.colors.white};
@@ -96,9 +112,16 @@ const CardStyled = styled.div<CardStyledProps>`
     grid-template-rows: 65% 1fr;
     padding: 20px;
     padding-bottom: 10px;
-    box-shadow: -8px 8px 20px 0px rgb(0 0 0 / 20%);
     border-radius: ${theme.borderRadius.extraRound};
-    position: relative;
+    position: relative; // pour le delete-button qui est en positon 'absolute'
+    /* border: 1px solid blue; */
+
+    // code pour rajouter les chips
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-radius: ${({ areChipsVisible }) =>
+    areChipsVisible === false && theme.borderRadius.extraRound};
 
     .delete-button {
       border: 1px solid red;
@@ -139,6 +162,7 @@ const CardStyled = styled.div<CardStyledProps>`
         width: 100%;
         height: 100%;
         object-fit: contain;
+        aspect-ratio: 1; // pour que l'image ne change pas de taille même si ".image" change de height à cause de la carte qui grandit de 30xp avec les chips en mode admin
       }
 
       .overlap {
@@ -202,6 +226,21 @@ const CardStyled = styled.div<CardStyledProps>`
           text-overflow: ellipsis;
           font-weight: ${theme.fonts.weights.medium};
           color: ${theme.colors.primary};
+          position: relative;
+
+          .new-price {
+          }
+
+          .old-price {
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            text-decoration: line-through;
+            color: ${({ isSelected }) =>
+    isSelected ? theme.colors.white : theme.colors.redSecondary};
+            font-size: ${theme.fonts.size.XS};
+            font-weight: ${theme.fonts.weights.semiBold};
+          }
         }
 
         .right-description {
@@ -218,19 +257,20 @@ const CardStyled = styled.div<CardStyledProps>`
       }
     }
 
-    ${({ isHoverable, isSelected }) => isHoverable && isSelected && selectedStyle}
+    ${({ isHoverable, isSelected, isMenu }) => isHoverable && isSelected && selectedStyle(isMenu)}
   }
 `
 
 const hoverableStyle = css`
   :hover {
-    box-shadow: ${theme.shadows.orangeHighlight};
+    /* box-shadow: ${theme.shadows.orangeHighlight}; */
     cursor: pointer;
   }
 `
 
-const selectedStyle = css`
-  background: ${theme.colors.primary};
+const selectedStyle = (isMenu?: any) => css`
+  background: ${isMenu ? theme.colors.purple : theme.colors.primary};
+
   .primary-button {
     color: ${theme.colors.primary};
     background-color: ${theme.colors.white};

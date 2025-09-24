@@ -3,10 +3,10 @@ import TextInput from "@/components/reusable-ui/TextInput"
 import SelectInput from "@/components/reusable-ui/SelectInput"
 import styled from "styled-components"
 import { getInputTextsConfig, getSelectInputConfig } from "./inputConfig"
-import { MenuProduct } from "@/types/Product"
+import { Product } from "@/types/Product"
 
 export type InputsProps = {
-  product: MenuProduct
+  product: Product
   // onChange: React.ChangeEventHandler<HTMLInputElement> | React.ChangeEventHandler<HTMLSelectElement>
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>
   onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>

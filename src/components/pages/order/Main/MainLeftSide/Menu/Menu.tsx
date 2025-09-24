@@ -61,7 +61,7 @@ export default function Menu() {
 
   return (
     <TransitionGroup component={MenuStyled} className="menu">
-      {menu.map(({ id, title, imageSource, price, isAvailable, isPublicised }) => {
+      {menu.map(({ id, title, imageSource, price, isAvailable, isPublicised, categories }) => {
         return (
           <CSSTransition classNames={"menu-animation"} key={id} timeout={300}>
             <div className={cardContainerClassName}>
@@ -78,6 +78,7 @@ export default function Menu() {
                 onAdd={(event) => handleAddButton(event, id)}
                 overlapImageSource={IMAGE_NO_STOCK}
                 isOverlapImageVisible={convertStringToBoolean(isAvailable) === false}
+                categories={categories}
               />
             </div>
           </CSSTransition>
@@ -92,12 +93,12 @@ const MenuStyled = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
-  grid-row-gap: 60px;
+  grid-row-gap: 100px;
   padding: 50px 50px 150px;
   justify-items: center;
   box-shadow: 0px 8px 20px 8px rgba(0, 0, 0, 0.2) inset;
   overflow-y: scroll;
-
+  
   ${menuAnimation}
 
   .card-container {

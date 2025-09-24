@@ -1,4 +1,4 @@
-import { BasketProduct, MenuProduct } from "@/types/Product"
+import { BasketProduct, Product } from "@/types/Product"
 //@ts-ignore
 import { EMPTY_PRODUCT } from "../constants/product"
 
@@ -16,7 +16,7 @@ export const SMALL: BasketProductOmitted[] = [
 ]
 
 export const MEDIUM: (Omit<BasketProduct, "price" | "isAvailable" | "isPublicised"> &
-  Pick<MenuProduct, "price">)[] = [
+  Pick<Product, "price">)[] = [
   {
     id: "1",
     imageSource: "images/burger1.png",

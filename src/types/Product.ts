@@ -1,4 +1,6 @@
-export type MenuProduct = {
+import { Category } from "./Category"
+
+export type Product = {
   id: string
   imageSource: string
   title: string
@@ -6,6 +8,7 @@ export type MenuProduct = {
   quantity?: number //@TODO: à voir si quantity doit eêtre retiré ou non
   isAvailable: boolean
   isPublicised: boolean
+  categories?: Category[]
 }
 
 export type BasketProductQuantity = {
@@ -13,4 +16,4 @@ export type BasketProductQuantity = {
   quantity: number
 }
 
-export type BasketProduct = MenuProduct & BasketProductQuantity
+export type BasketProduct = Product & BasketProductQuantity

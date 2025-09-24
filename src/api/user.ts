@@ -1,7 +1,7 @@
 import { doc, getDoc, setDoc } from "firebase/firestore"
 import { db } from "./firebase-config"
-import { fakeMenu } from "@/fakeData/fakeMenu"
 import { User } from "@/types/User"
+import { fakeProducts } from "@/fakeData/fakeProducts"
 
 export const getUser = async (idUser: string): Promise<User | undefined> => {
   //const docRef = doc(CHEMIN)
@@ -26,7 +26,7 @@ export const createUser = async (userId: string): Promise<User> => {
   // NOURRITURE
   const newUserToCreate: User = {
     username: userId,
-    menu: fakeMenu.SMALL,
+    menu: fakeProducts.MEDIUM,
   }
 
   //setDoc(CACHETTE, NOURRITURE)
