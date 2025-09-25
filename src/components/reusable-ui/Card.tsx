@@ -4,6 +4,7 @@ import Button from "./Button"
 import { TiDelete } from "react-icons/ti"
 import { fadeInFromRight, fadeInFromTop } from "@/theme/animations"
 import { Chips } from "../pages/order/Main/MainLeftSide/Menu/Chips"
+import { Category } from "@/types/Category"
 
 type CardProps = {
   title?: string
@@ -18,8 +19,8 @@ type CardProps = {
   onAdd?: React.MouseEventHandler<HTMLButtonElement>
   overlapImageSource: string
   isOverlapImageVisible?: boolean
-  categories?: any
-  oldPrice?: any
+  categories?: Category[]
+  oldPrice?: string
 }
 
 export default function Card({
@@ -37,7 +38,7 @@ export default function Card({
   isOverlapImageVisible,
   categories,
   oldPrice,
-}: any) {
+}: CardProps) {
   // state (vide)
 
   // affichage
@@ -90,7 +91,12 @@ export default function Card({
   )
 }
 
-type CardStyledProps = any
+type CardStyledProps = {
+  isHoverable?: boolean
+  areChipsVisible?: boolean
+  isSelected?: boolean
+  isMenu?: boolean
+}
 
 const CardStyled = styled.div<CardStyledProps>`
   ${({ isHoverable }) => isHoverable && hoverableStyle}
@@ -268,7 +274,7 @@ const hoverableStyle = css`
   }
 `
 
-const selectedStyle = (isMenu?: any) => css`
+const selectedStyle = (isMenu?: boolean) => css`
   background: ${isMenu ? theme.colors.purple : theme.colors.primary};
 
   .primary-button {
