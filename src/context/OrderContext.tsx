@@ -46,7 +46,7 @@ type OrderContextType = {
 const OrderContext = createContext<OrderContextType | undefined>(undefined) // pas la peine de mettre null, undefined suffit amplement mais faut l'écrire explicitmeent car createContext attend forcément un argument.
 
 // 2. Installation du context
-export const OrderContextProvider = ({ children }: any) => {
+export const OrderContextProvider = ({ children }: PropsWithChildren) => {
   const [isModeAdmin, setIsModeAdmin] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [currentTabSelected, setCurrentTabSelected] = useState<ADMIN_TAB_LABEL>(ADMIN_TAB_LABEL.ADD)
