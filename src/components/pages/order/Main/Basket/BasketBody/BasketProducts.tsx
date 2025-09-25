@@ -9,7 +9,7 @@ import { basketAnimation } from "@/theme/animations"
 import { formatPrice } from "@/utils/maths"
 import { convertStringToBoolean } from "@/utils/string"
 import { useParams } from "react-router-dom"
-import { MenuProduct } from "@/types/Product"
+import { Product } from "@/types/Product"
 
 export default function BasketProducts() {
   const {
@@ -28,7 +28,7 @@ export default function BasketProducts() {
     username && handleDeleteBasketProduct(id, username)
   }
 
-  const getPrice = (menuProduct: MenuProduct) => {
+  const getPrice = (menuProduct: Product) => {
     return convertStringToBoolean(menuProduct.isAvailable)
       ? formatPrice(menuProduct.price)
       : BASKET_MESSAGE.NOT_AVAILABLE

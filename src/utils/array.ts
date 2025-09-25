@@ -1,3 +1,5 @@
+import { Category } from "@/types/Category"
+
 export const deepClone = <T>(array: T[]): T[] => {
   return JSON.parse(JSON.stringify(array))
 }
@@ -34,3 +36,7 @@ export const isEmpty = <T>(array: T[]): boolean => {
 // console.log("fruits: ", fruits)
 // //console.log("fruitsShallowCopy: ", fruitsShallowCopy)
 // console.log("fruitsDeepCopy: ", fruitsDeepCopy)
+
+export const getCategoryActive = (categories: Category[]): Category | undefined => {
+  return categories.find((category) => category.isActive)
+}

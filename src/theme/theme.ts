@@ -16,7 +16,15 @@ const colors = {
   greyDark: "#6f737e",
   greyBlue: "#747b91",
   loginLine: "#f56a2c",
-}
+  brown: "#804A00",
+  rose: "#FF99C8",
+  purple: "#A01FF0",
+  yellow: "#FFC300",
+} as const
+
+export type Color = typeof colors
+export type ColorKeys = keyof typeof colors
+export type ColorValues = Color[keyof typeof colors]
 
 const spacing = {
   xxs: "4px",
@@ -61,6 +69,7 @@ const borderRadius = {
   round: "5px",
   extraRound: "15px",
   circle: "50%",
+  badgeRound: "25px",
 }
 
 const shadows = {
