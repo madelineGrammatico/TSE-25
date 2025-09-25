@@ -1,38 +1,40 @@
 import { getMenu } from "@/api/product"
 import { getLocalStorage } from "@/utils/window"
 import { getCategories } from "@/api/categories"
+import { BasketProductQuantity, Product } from "@/types/Product"
+import { Category } from "@/types/Category"
 
 const intialiseMenu = async (
-  username: any,
-  setMenu: any
+  username: string,
+  setMenu: React.Dispatch<React.SetStateAction<Product[] | undefined>>
 ) => {
   const menuReceived = await getMenu(username)
   setMenu(menuReceived)
 }
 
 const intialiseBasket = (
-  username: any,
-  setBasket: any
+  username: string,
+  setBasket: React.Dispatch<React.SetStateAction<BasketProductQuantity[]>>
 ) => {
   const basketReceived = getLocalStorage(username) // localStorage est synchrone, pas besoin de "await".
-  if (basketReceived) setBasket(basketReceived as any)
+  if (basketReceived) setBasket(basketReceived as BasketProductQuantity[])
 }
 
 const intialiseCategories = async (
-  username: any,
-  setCategories: any
+  username: string,
+  setCategories: React.Dispatch<React.SetStateAction<Category[]>>
 ) => {
   //@ts-ignore
   const categoriesReceived = await getCategories(username)
-  setCategories(categoriesReceived as any)
+  setCategories(categoriesReceived as Category[])
 }
 
 
 export const initialiseUserSession = async (
-  username: any,
-  setMenu: any,
-  setBasket: any,
-  setCategories: any,
+  username: string,
+  setMenu: React.Dispatch<React.SetStateAction<Product[] | undefined>>,
+  setBasket: React.Dispatch<React.SetStateAction<BasketProductQuantity[]>>,
+  setCategories: React.Dispatch<React.SetStateAction<Category[]>>,
 
 ) => {
   await intialiseMenu(username, setMenu)
