@@ -1,26 +1,28 @@
 import { Chip } from "@/components/reusable-ui/Chip"
 import { badgeAnimation, chipAnimation } from "@/theme/animations"
 import { theme } from "@/theme/theme"
+import { Category } from "@/types/Category"
 import { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
 
-type ChipsProps = any
+type ChipsProps = {
+  categories?: Category[]
+}
 
-export const Chips = ({ categories }: any) => {
-  console.log('categories: ', categories)
+export const Chips = ({ categories }: ChipsProps) => {
   const [isScrollable, setIsScrollable] = useState(false);
   const [isAtEnd, setIsAtEnd] = useState(false);
 
 
-  const elementScrollable = useRef<any>(null);
-  const scrollToRight = (event: any) => {
+  const elementScrollable = useRef<HTMLDivElement>(null);
+  const scrollToRight = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (elementScrollable.current) {
       event.stopPropagation()
       elementScrollable.current.scrollBy({ left: 110, behavior: "smooth" }); // 110px à droite
     }
   }
 
-  const scrollToStart = (event: any) => {
+  const scrollToStart = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (elementScrollable.current) {
       event.stopPropagation()
       elementScrollable.current.scrollTo({ left: 0, behavior: "smooth" });
