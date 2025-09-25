@@ -6,7 +6,7 @@ import { syncBothMenus } from "../api/product"
 import { Product } from "@/types/Product"
 
 export const useMenu = () => {
-  const [menu, setMenu] = useState<Product[] | undefined>()
+  const [menu, setMenu] = useState<Product[] | undefined>(undefined)
 
   // comportements (gestionnaire de state ou "state handlers")
   const handleAdd = (newProduct: Product, username: string) => {
