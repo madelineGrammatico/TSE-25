@@ -1,6 +1,7 @@
 import { theme } from "@/theme/theme"
 
-export function applyOpacity(hexColor: any, opacity: any) {
+//@TODO: peut-être typer hexColor en Color[keyof Color]
+export function applyOpacity(hexColor: string, opacity: number) {
   // Convertir la couleur hex en RGB
   let r = parseInt(hexColor.substring(1, 3), 16)
   let g = parseInt(hexColor.substring(3, 5), 16)
@@ -17,11 +18,16 @@ export function applyOpacity(hexColor: any, opacity: any) {
     .padStart(2, "0")}`
 }
 
-export const isHexColor = (color: any): any => {
+//@TODO: peut-être typer hexColor en Color[keyof Color]
+export const isHexColor = (color: string): boolean => {
   return /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/.test(color)
 }
 
-export const getBgColorToApply = (data: any, isSelected: any, isFocused: any) => {
+export const getBgColorToApply = (
+  data: { color: string },
+  isSelected: boolean,
+  isFocused: boolean
+) => {
   let bgColor = "lightgrey"
   if ("color" in data) {
     bgColor = isSelected

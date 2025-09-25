@@ -7,6 +7,8 @@ import { GiChocolateBar } from "react-icons/gi"
 import { CiFries } from "react-icons/ci"
 import { BsCupHotFill } from "react-icons/bs"
 import { IoFastFoodOutline } from "react-icons/io5"
+import { IconName } from "@/types/Category"
+import { IconType } from "react-icons"
 
 // nom technique : dictionnaire, mapping JS/TS, lookup table
 // export const ICON_MAP: Record<IconName, IconType> = {
@@ -23,7 +25,7 @@ import { IoFastFoodOutline } from "react-icons/io5"
 //     ICON_MAP[name] ?? MdQuestionMark
 
 // ci-dessous, ça marche et ça réuni dans getCategoryIcon() à la fois la fonction utilitaire et le dictionnaire / mapping / lookup table.
-export const getCategoryIcon = (iconName: any): any => {
+export const getCategoryIcon = (iconName: IconName): IconType | null => {
   if (iconName === "sandwich") return FaHamburger
   if (iconName === "verre") return RiDrinks2Line
   if (iconName === "veggies") return LuSalad
