@@ -11,7 +11,7 @@ export const checkIfProductIsClicked = (
 export const getProductsToDisplay = (
   categoryAll: Category,
   products: Product[],
-  activeCategory: Category | undefined
+  activeCategory: Category
 ) => {
   const productsToDisplayed = categoryAll.isActive
     ? products

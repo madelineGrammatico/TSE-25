@@ -26,7 +26,6 @@ const intialiseCategories = async (
 ) => {
   //@ts-ignore
   const categoriesReceived = await getCategories(username)
-  console.log('categoriesReceived: ', categoriesReceived)
   if (categoriesReceived) {
     setCategories(categoriesReceived as Category[])
   }
