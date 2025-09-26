@@ -63,6 +63,10 @@ const fonts = {
     openSans: '"Open Sans", sans-serif',
   },
 }
+
+type FontSize = typeof fonts.size
+export type FontSizeKey = keyof FontSize
+
 const gridUnit = 8
 const borderRadius = {
   subtle: 1,
