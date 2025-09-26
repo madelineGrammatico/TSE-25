@@ -2,6 +2,12 @@ import { doc, getDoc, setDoc } from "firebase/firestore"
 import { db } from "./firebase-config"
 import { User } from "@/types/User"
 import { fakeProducts } from "@/fakeData/fakeProducts"
+import { fakeCategories } from "@/fakeData/fakeCategories"
+
+const NEW_USER_BY_DEFAULT = {
+  products: fakeProducts.LARGE,
+  categories: fakeCategories.LARGE,
+}
 
 export const getUser = async (idUser: string): Promise<User | undefined> => {
   //const docRef = doc(CHEMIN)
@@ -26,7 +32,8 @@ export const createUser = async (userId: string): Promise<User> => {
   // NOURRITURE
   const newUserToCreate: User = {
     username: userId,
-    menu: fakeProducts.MEDIUM,
+    menu: fakeProducts.LARGE,
+    categories: NEW_USER_BY_DEFAULT.categories,
   }
 
   //setDoc(CACHETTE, NOURRITURE)

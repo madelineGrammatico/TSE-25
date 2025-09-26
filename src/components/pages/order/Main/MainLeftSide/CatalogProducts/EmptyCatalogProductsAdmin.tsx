@@ -24,6 +24,13 @@ const EmptyMenuStyled = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center; // permet de diminuer la largeur du bouton resetMenu
+  height: 100%;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   .title,
   .description {

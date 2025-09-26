@@ -23,7 +23,7 @@ export default function Button({
   return (
     <ButtonStyled className={className} version={version} onClick={onClick} disabled={isLoading}>
       {isLoading ? (
-        <Loader />
+        <Loader color={theme.colors.white} />
       ) : (
         <>
           <span>{label}</span>

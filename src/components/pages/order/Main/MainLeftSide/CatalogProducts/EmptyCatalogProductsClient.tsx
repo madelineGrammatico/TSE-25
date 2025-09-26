@@ -13,12 +13,19 @@ export default function EmptyMenuClient() {
 
 const EmptyMenuStyled = styled.div`
   background-color: ${theme.colors.background_white};
-  box-shadow: ${theme.shadows.strong};
-  border-bottom-right-radius: ${theme.borderRadius.extraRound};
+  /* box-shadow: ${theme.shadows.strong}; */
+  /* border-bottom-right-radius: ${theme.borderRadius.extraRound}; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center; // permet de diminuer la largeur du bouton resetMenu
+  height: 100%;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 
   .title,
   .description {
