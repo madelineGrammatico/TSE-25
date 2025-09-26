@@ -5,7 +5,7 @@ import { Loader } from "@/components/reusable-ui/Loader"
 export default function LoadingMessage() {
   return (
     <LoadingMessageStyled>
-      <Loader variant="P3" />
+      <Loader size="P3" />
     </LoadingMessageStyled>
   )
 }
