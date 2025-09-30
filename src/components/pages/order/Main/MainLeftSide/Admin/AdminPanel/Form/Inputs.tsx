@@ -4,6 +4,7 @@ import SelectInput from "@/components/reusable-ui/SelectInput"
 import styled from "styled-components"
 import { getInputTextsConfig, getSelectInputConfig } from "./inputConfig"
 import { Product } from "@/types/Product"
+import { SelectBadge } from "@/components/reusable-ui/SelectBadge"
 
 export type InputsProps = {
   product: Product
@@ -42,12 +43,12 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
         </div>
         {/* CATEGORIES */}
         <div className="categories">
-          <TextInput
+          <SelectBadge
             {...inputTexts[2]}
-            onChange={onChange}
-            version="minimalist"
-            onFocus={onFocus}
-            onBlur={onBlur}
+            // onChange={onChange}
+            // version="minimalist"
+            // onFocus={onFocus}
+            // onBlur={onBlur}
           />
         </div>
         {/* PRICE */}
