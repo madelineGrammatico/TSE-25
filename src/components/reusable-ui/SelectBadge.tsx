@@ -37,10 +37,10 @@ export const SelectBadge = ({ placeholder, Icon, classname}: SelectBadgeProps) =
 
     }]
     
-    const formatGroupLabel = (group: GroupBase<OptionType>) =>
-      { return group.options.map((option)=>(
-        <Chip key={option.id} {...option} className="chip" />
-     ))}
+    const formatGroupLabel = (group: GroupBase<OptionType>) => {return []}
+    //   { return group.options.map((option)=>(
+    //     <Chip key={option.id} {...option} className="chip" />
+    //  ))}
     //  <Chip key={group.options.length} {...group.options} className="chip" />
     
 
@@ -50,22 +50,54 @@ export const SelectBadge = ({ placeholder, Icon, classname}: SelectBadgeProps) =
             backgroundColor: theme.colors.background_white,
             border: "none",
             color:theme.colors.greyBlue,
-            
         }),
         option: (styles, { data, isDisabled, isSelected, isFocused}) => {
             return {
                 ...styles,
+                display: "flex",
+                justifyContent: "center",
+                alignItems:"center",
                 backgroundColor: "transparent",
                 borderRadius: theme.borderRadius.badgeRound,
                 color: data.color,
                 cursor: isDisabled ? 'not-allowed' : 'default',
-
+                width: "fit-content",
+                padding: `${theme.spacing.xmd} ${theme.spacing.sm}`,
+                height: theme.spacing.lg,
+                fontWeight: theme.fonts.weights.regular,
+                fontSize: theme.fonts.size.P0,
+                margin:"0",
+                ':hover': {
+                    cursor:"pointer",
+                },
                 ':active': {
                     ...styles[':active'],
                     backgroundColor: getBgColorToApply({color: data.color}, isSelected, isFocused),
                 }
             }
         },
+        menu: (styles) => ({
+                ...styles,
+                backgroundColor: theme.colors.white,
+                position: "absolute",
+                height:"fit-content",
+                top:"inherit",
+                bottom: "100%",
+                padding:`0 ${theme.spacing.xs}`,
+                
+                
+            })
+        ,
+        menuList: (styles) => ({
+                ...styles,
+                padding:"0",
+                margin:"0",
+                display:"flex",
+                justifyContent:"start",
+                alignItems: "start",
+                gap: theme.spacing.xl,
+            })
+        ,
         multiValue: (styles, { data }) => {
             return {
                 ...styles,
@@ -111,7 +143,12 @@ export const SelectBadge = ({ placeholder, Icon, classname}: SelectBadgeProps) =
             ':hover': {
                 backgroundColor: "transparent",
                 color: data.color,
+                cursor:"pointer",
             },
+        }),
+        clearIndicator:(styles) => ({
+            ...styles,
+            cursor:"pointer",
         }),
         indicatorSeparator: (styles) => ({
             ...styles,

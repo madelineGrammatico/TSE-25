@@ -30,6 +30,7 @@ const spacing = {
   xxs: "4px",
   xs: "8px",
   sm: "12px",
+  xmd: "15px",
   md: "20px",
   lg: "32px",
   xl: "52px",
