@@ -45,10 +45,10 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
         <div className="categories">
           <SelectBadge
             {...inputTexts[2]}
-            // onChange={onChange}
+            onChange={onChange}
             // version="minimalist"
-            // onFocus={onFocus}
-            // onBlur={onBlur}
+            onFocus={onFocus}
+            onBlur={onBlur}
           />
         </div>
         {/* PRICE */}

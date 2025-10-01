@@ -1,11 +1,11 @@
 import { useOrderContext } from "@/context/OrderContext"
 import { Category, IconName } from "@/types/Category"
-import  Select, { ControlProps, GroupBase, GroupProps, StylesConfig }from "react-select"
-import { Chip } from "./Chip"
+import  Select, { ActionMeta, GroupBase, GroupProps, OnChangeValue, StylesConfig }from "react-select"
+// import { Chip } from "./Chip"
 import { applyOpacity, getBgColorToApply } from "@/utils/color"
 
 import { ColorValues, theme } from "@/theme/theme"
-import { ComponentPropsWithoutRef } from "react"
+import { ComponentPropsWithoutRef, useState } from "react"
 import styled from "styled-components"
 import { getCategoryIcon } from "@/utils/icon"
 
@@ -19,12 +19,33 @@ type SelectBadgeProps= {
     version?: "minimalist",
     placeholder?:string,
     classname:string,
+    onChange: React.ChangeEventHandler<HTMLSelectElement>,
+    onFocus?: React.FocusEventHandler< HTMLInputElement>,
+    onBlur?: React.FocusEventHandler< HTMLInputElement>,
 
-}   & Partial<ComponentPropsWithoutRef<"select">>
-    & Omit<ComponentPropsWithoutRef<"select">, "defaultValue"| "value" |"id">
+}   & Partial<ComponentPropsWithoutRef<"div">>
+    // & Omit<ComponentPropsWithoutRef<"div">, "defaultValue"| "value" |"id">
 
-export const SelectBadge = ({ placeholder, Icon, classname}: SelectBadgeProps) => {
+export const SelectBadge = ({ 
+    placeholder,
+    onChange: onFormValueChange,
+    ...extraProps
+ }: SelectBadgeProps) => {
     const {categories} = useOrderContext()
+    // const [newCategories, setNewCategories] = useState<Category[]>([])
+    const handleSelectChange= ( 
+        newValue: OnChangeValue<OptionType, true>,
+        actionMeta: ActionMeta<OptionType>
+    ) => {
+        const valuesSelected = newValue.map((option) => option.value)
+        const fakeEvent = {
+            target: {
+                name: "categories",
+                value: valuesSelected,
+            }
+        }as unknown as React.ChangeEvent<HTMLSelectElement>
+        onFormValueChange(fakeEvent)
+    }
     const options = categories.map((category)=>(
         {
             ...category,
@@ -39,7 +60,7 @@ export const SelectBadge = ({ placeholder, Icon, classname}: SelectBadgeProps) =
 
     }]
     
-    const formatGroupLabel = (group: GroupBase<OptionType>) => {return []}
+    // const formatGroupLabel = (group: GroupBase<OptionType>) => {return []}
     //   { return group.options.map((option)=>(
     //     <Chip key={option.id} {...option} className="chip" />
     //  ))}
@@ -160,31 +181,29 @@ export const SelectBadge = ({ placeholder, Icon, classname}: SelectBadgeProps) =
             display: "none"
         }),
     }
-    const Group = (props: GroupProps) => (
-        <div style={groupStyles}>
-            <components.Group {...props} />
-        </div>
-    );
+    // const Group = (props: GroupProps) => (
+    //     <div style={groupStyles}>
+    //         <components.Group {...props} />
+    //     </div>
+    // );
    
     return <Select<OptionType, true, GroupBase<OptionType>>
+        {...extraProps}
         options={groupedOption}
         isMulti={true}
         closeMenuOnSelect={false}
-        formatGroupLabel={formatGroupLabel}
+        // formatGroupLabel={formatGroupLabel}
         defaultValue={options}
         styles={colourStyle}
         placeholder={placeholder}
         filterOption={()=> true}
         components={{
             MultiValueLabel: ({data})=> (
-                // <Chip 
-                // {...props.data}
-                // className={classname}
-                // />
                 <BadgeLabel iconName={data.iconName} label={data.label} color={data.color}/>
             ),
        
         }}
+        onChange={handleSelectChange}
     />
 }
 
