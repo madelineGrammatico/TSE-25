@@ -1,11 +1,13 @@
 import { useOrderContext } from "@/context/OrderContext"
-import { Category } from "@/types/Category"
-import  Select, { GroupBase, StylesConfig }from "react-select"
+import { Category, IconName } from "@/types/Category"
+import  Select, { ControlProps, GroupBase, GroupProps, StylesConfig }from "react-select"
 import { Chip } from "./Chip"
 import { applyOpacity, getBgColorToApply } from "@/utils/color"
 
-import { theme } from "@/theme/theme"
+import { ColorValues, theme } from "@/theme/theme"
 import { ComponentPropsWithoutRef } from "react"
+import styled from "styled-components"
+import { getCategoryIcon } from "@/utils/icon"
 
 
 type OptionType = Category & {
@@ -98,6 +100,10 @@ export const SelectBadge = ({ placeholder, Icon, classname}: SelectBadgeProps) =
                 gap: theme.spacing.xl,
             })
         ,
+        groupHeading:(styles) => ({
+            ...styles,
+            display: "none",
+        }),
         multiValue: (styles, { data }) => {
             return {
                 ...styles,
@@ -117,17 +123,12 @@ export const SelectBadge = ({ placeholder, Icon, classname}: SelectBadgeProps) =
                 height: theme.spacing.lg,
             };
         },
-        multiValueLabel: (styles, { data }) => ({
-            ...styles,
-            display: "flex",
-            alignItems: "center",
-            lineHeight: 1,
-            
-            fontWeight: theme.fonts.weights.regular,
-            fontSize: theme.fonts.size.SM,
-            color: data.color,
-        
-        }),
+        // multiValueLabel: (styles) => ({
+        //     ...styles,
+        //     display: "flex",
+        //     alignItems: "center",
+        //     lineHeight: 1,
+        // }),
         multiValueRemove: (styles, { data }) => ({
             ...styles,
             border:`1px solid ${data.color}`,
@@ -159,17 +160,55 @@ export const SelectBadge = ({ placeholder, Icon, classname}: SelectBadgeProps) =
             display: "none"
         }),
     }
+    const Group = (props: GroupProps) => (
+        <div style={groupStyles}>
+            <components.Group {...props} />
+        </div>
+    );
+   
     return <Select<OptionType, true, GroupBase<OptionType>>
-       options={groupedOption}
-       isMulti={true}
-       closeMenuOnSelect={false}
-       formatGroupLabel={formatGroupLabel}
-       defaultValue={options}
-       styles={colourStyle}
-       placeholder={placeholder}
-
-       className={classname}
+        options={groupedOption}
+        isMulti={true}
+        closeMenuOnSelect={false}
+        formatGroupLabel={formatGroupLabel}
+        defaultValue={options}
+        styles={colourStyle}
+        placeholder={placeholder}
+        filterOption={()=> true}
+        components={{
+            MultiValueLabel: ({data})=> (
+                // <Chip 
+                // {...props.data}
+                // className={classname}
+                // />
+                <BadgeLabel iconName={data.iconName} label={data.label} color={data.color}/>
+            ),
+       
+        }}
     />
-
-
 }
+
+
+export const BadgeLabel = ({iconName, label, color}:{iconName: IconName, label: string, color: ColorValues}) => {
+    const IconToDisplay = getCategoryIcon(iconName)
+    return(
+        <LabelStyled color={color}>
+            {IconToDisplay&&<IconToDisplay height={theme.fonts.size.SM} width={theme.fonts.size.SM}/>}
+            <span className="label">{label}</span>
+        </LabelStyled>
+    )
+    
+}
+type LabelStyledProps = {
+    color: ColorValues
+}
+const LabelStyled = styled.span<LabelStyledProps>`
+      display: flex;
+            align-items: center;
+            line-height: 1;
+            gap: ${theme.spacing.xs};
+            
+            font-weight: ${theme.fonts.weights.regular};
+            font-size: ${theme.fonts.size.SM};
+            color: ${({color})=> color};
+    `;
