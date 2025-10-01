@@ -28,7 +28,7 @@ export const getInputTextsConfig = (newProduct: Product) => [
   },
   {
     id: "2",
-    // name: "categories",
+    name: "categories",
     // value: newProduct.price ? newProduct.price : "",
     placeholder: "Catégories (ex: Boisson)",
     Icon: <IoPricetag />,

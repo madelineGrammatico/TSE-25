@@ -4,7 +4,9 @@ import SelectInput from "@/components/reusable-ui/SelectInput"
 import styled from "styled-components"
 import { getInputTextsConfig, getSelectInputConfig } from "./inputConfig"
 import { Product } from "@/types/Product"
-import { SelectBadge } from "@/components/reusable-ui/SelectBadge"
+// import { SelectBadge } from "@/components/reusable-ui/SelectBadge"
+import { MultiSelect } from "@/components/reusable-ui/MultiSelect/MultiSelect"
+import { useOrderContext } from "@/context/OrderContext"
 
 export type InputsProps = {
   product: Product
@@ -19,7 +21,17 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
     const inputTexts = getInputTextsConfig(product)
     const inputSelects = getSelectInputConfig(product)
 
-    // affichage
+
+
+    const { categories } = useOrderContext()
+    const optionsCategorie = categories.map((category)=>(
+        {
+            ...category,
+             value: category.value || "" ,
+             label: category.label || "" 
+        }
+    ))
+   
     return (
       <InputsStyled>
         <div className="first-row">
@@ -43,13 +55,21 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
         </div>
         {/* CATEGORIES */}
         <div className="categories">
-          <SelectBadge
-            {...inputTexts[2]}
-            onChange={onChange}
-            // version="minimalist"
-            onFocus={onFocus}
-            onBlur={onBlur}
-          />
+          <>
+            {/* <SelectBadge
+              {...inputTexts[2]}
+              onChange={onChange}
+              // version="minimalist"
+              onFocus={onFocus}
+              onBlur={onBlur}
+            /> */}
+            <MultiSelect
+              {...inputTexts[2]}
+              options={optionsCategorie}
+              closeMenuOnSelect={false}
+              onFormValuesChange={onChange? onChange : ()=>{}}
+            />
+          </>
         </div>
         {/* PRICE */}
         <TextInput
