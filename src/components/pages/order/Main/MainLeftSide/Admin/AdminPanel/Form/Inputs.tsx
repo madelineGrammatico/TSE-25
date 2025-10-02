@@ -1,4 +1,4 @@
-import React from "react"
+import React, { PropsWithChildren } from "react"
 import TextInput from "@/components/reusable-ui/TextInput"
 import SelectInput from "@/components/reusable-ui/SelectInput"
 import styled from "styled-components"
@@ -8,7 +8,10 @@ import { MultiSelect } from "@/components/reusable-ui/MultiSelect/MultiSelect"
 import { useOrderContext } from "@/context/OrderContext"
 import { IoPricetag } from "react-icons/io5"
 import { BadgeLabelSelect } from "./MultiSelect/BadgeLabelSelect"
+import { components, ControlProps, GroupBase } from "react-select";
 import { GetOptionsCategories } from "./MultiSelect/MultiSelectCategoriesConfig"
+import { getCategoryIcon } from "@/utils/icon"
+import { Category } from "@/types/Category"
 
 export type InputsProps = {
   product: Product
@@ -17,6 +20,26 @@ export type InputsProps = {
   onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>
 }
+
+const CustomMultiValueLabel = (props: any) => (
+  <components.MultiValueLabel {...props}>
+    <BadgeLabelSelect 
+      iconName={props.data.iconName} 
+      label={props.data.label} 
+      color={props.data.color}
+    />
+  </components.MultiValueLabel>
+);
+const CustomOption = (props: any) => (
+  <components.Option {...props}>
+    <BadgeLabelSelect 
+      iconName={props.data.iconName} 
+      label={props.data.label} 
+      color={props.data.color}
+    />
+  </components.Option>
+);
+
 
 export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
   ({ product, onChange, onFocus, onBlur }, ref) => {
@@ -58,10 +81,12 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
             placeholder="Catégories (ex: Boisson)"
             Icon= {<IoPricetag />}
             className="categories"
+            getOptionValue={(option) => option.value}
             components={{
-              MultiValueLabel: ({data})=> (
-                  <BadgeLabelSelect iconName={data.iconName} label={data.label} color={data.color}/>
-              )
+              MultiValueLabel: CustomMultiValueLabel,
+              Option: CustomOption,
+              
+
             }}
           />
         </div>

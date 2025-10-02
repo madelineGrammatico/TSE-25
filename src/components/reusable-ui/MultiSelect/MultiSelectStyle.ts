@@ -9,8 +9,9 @@ export const getColourStyle  = <Data extends {color: ColorValues}> ():StylesConf
             backgroundColor: theme.colors.background_white,
             border: "none",
             color:theme.colors.greyBlue,
+            paddingLeft: "23px",
         }),
-        option: (styles, { data, isDisabled, isSelected, isFocused}) => {
+        option: (styles, { data, isDisabled, isSelected}) => {
             return {
                 ...styles,
                 display: "flex",
@@ -28,10 +29,11 @@ export const getColourStyle  = <Data extends {color: ColorValues}> ():StylesConf
                 margin:"0",
                 ':hover': {
                     cursor:"pointer",
+                    backgroundColor: getBgColorToApply({color: data.color}, isSelected, true),
                 },
                 ':active': {
                     ...styles[':active'],
-                    backgroundColor: getBgColorToApply({color: data.color}, isSelected, isFocused),
+                    backgroundColor: getBgColorToApply({color: data.color}, isSelected, true),
                 }
             }
         },

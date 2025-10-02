@@ -1,5 +1,5 @@
 import { ComponentProps, useEffect } from "react"
-import Select, { MultiValue } from "react-select"
+import Select, { components, ControlProps, GroupBase, MultiValue } from "react-select"
 import { ColorValues } from "@/theme/theme";
 import { getColourStyle } from "./MultiSelectStyle"
 
@@ -49,7 +49,14 @@ export const MultiSelect = <
         } as unknown as React.ChangeEvent<HTMLSelectElement>
         onFormSelectChange(fakeEvent)
     }
-
+    const CustomControl = (props: ControlProps<TOption, true, GroupBase<TOption>>) => {
+      const { children } = props
+      return (
+      <components.Control {...props}>
+        {Icon}
+        {children}
+      </components.Control>
+    )}
     return(
         <Select {...propsRest} 
         options={options}
@@ -59,6 +66,9 @@ export const MultiSelect = <
         placeholder={placeholder}
         onChange={handleSelectChange}
         styles={getColourStyle<TOption>()}
+        components={{
+            Control: CustomControl,
+        }}
         />
     )
 }
