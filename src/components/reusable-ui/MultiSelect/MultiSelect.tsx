@@ -1,25 +1,37 @@
-import { ComponentProps, useState } from "react"
-import Select, { ActionMeta, MultiValue, OnChangeValue } from "react-select"
+import { ComponentProps, useEffect,
+    //  useState 
+    } from "react"
+import Select, { 
+    MultiValue, 
+    // OnChangeValue 
+} from "react-select"
 
-type MultiSelectProps = 
+type MultiSelectProps<T extends {}> = 
     ComponentProps<typeof Select<unknown, true>>
-    & {
+    & { 
+        name: string,
         Icon?: React.ReactNode,
-        onFormValuesChange: React.ChangeEventHandler<HTMLSelectElement>,
+        onFormSelectChange: React.ChangeEventHandler<HTMLSelectElement>,
+        domainObject: T,
+        setDomainObject:  React.Dispatch<React.SetStateAction<T>>,
     }
-type Option = {
-    value: string,
-    label: string
-}
-export const MultiSelect = ({
+
+export const MultiSelect = <T extends {}> ({
     placeholder, 
     options, 
     Icon, 
-    onFormValuesChange, 
-    name, 
-...propsRest}: MultiSelectProps) => {
-    const {} = useState()
-
+    onFormSelectChange, 
+    name,
+    domainObject, // (ex: Product, Menu, ...)
+    setDomainObject,
+...propsRest}: MultiSelectProps<T>) => {
+    // const { isFormSubmitted, setFormSubmitted } = useState(false)
+    
+    useEffect(() => {
+        if(!name) return 
+        setDomainObject({...domainObject, [name]: options })
+    }, [])
+    
     function isOptionWithValue (object: unknown): object is { value: string } {
          return typeof object === "object" && object !== null && "value" in object
     }
@@ -27,19 +39,17 @@ export const MultiSelect = ({
     const handleSelectChange = ( 
         newValue: MultiValue<unknown> ,
         //  newValue: OnChangeValue<unknown, true> ,
-        actionMeta: ActionMeta<unknown>
     ) => {
         const valuesSelected = newValue
             .filter(isOptionWithValue)
             .map((option) => option.value)
-        console.log("name props: ", name)
         const fakeEvent = {
             target: {
                 name,
                 value: valuesSelected,
             }
         } as unknown as React.ChangeEvent<HTMLSelectElement>
-        onFormValuesChange(fakeEvent)
+        onFormSelectChange(fakeEvent)
     }
 
     return(

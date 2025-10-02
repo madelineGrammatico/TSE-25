@@ -23,7 +23,7 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
 
 
 
-    const { categories } = useOrderContext()
+    const { categories, newProduct, setNewProduct} = useOrderContext()
     const optionsCategorie = categories.map((category)=>(
         {
             ...category,
@@ -67,7 +67,9 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
               {...inputTexts[2]}
               options={optionsCategorie}
               closeMenuOnSelect={false}
-              onFormValuesChange={onChange? onChange : ()=>{}}
+              onFormSelectChange={onChange? onChange : ()=>{}}
+              domainObject={newProduct}
+              setDomainObject={setNewProduct}
             />
           </>
         </div>

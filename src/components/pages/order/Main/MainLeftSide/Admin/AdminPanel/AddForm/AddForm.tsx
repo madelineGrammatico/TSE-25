@@ -5,7 +5,7 @@ import { replaceFrenchCommaWithDot } from "@/utils/maths"
 import Form from "../Form/Form"
 import SubmitButton from "./SubmitButton"
 import { useParams } from "react-router-dom"
-import { Product } from "@/types/Product"
+// import { Product } from "@/types/Product"
 
 export default function AddForm() {
   // state
@@ -17,32 +17,26 @@ export default function AddForm() {
   // comportements
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log("handle submit",)
     if (!username) return
     const newProductToAdd = {
       ...newProduct,
       id: crypto.randomUUID(),
       price: replaceFrenchCommaWithDot(newProduct.price),
-      categories: categories.filter((category) => { 
-        // console.log("filter :", category.value === newProduct.categories?.values )
-        if(!category.value) return false
-        return newProduct.categories?.includes(category.value)
-        // return  === newProduct.categories?.values 
-      })
-    } as Product
-    console.log("filter :", )
-    console.log("newProductToAdd :", newProductToAdd.categories)
+      categories: filterNewProductCategories()
+    }
     handleAdd(newProductToAdd, username)
     setNewProduct(EMPTY_PRODUCT)
 
     displaySuccessMessage()
   }
-
+  const filterNewProductCategories = () => {
+      if (!newProduct.categories) return []
+      const values = newProduct.categories.map((category) => category.value)
+      return categories.filter((category)=> values.includes(category.value))
+    }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target
-    console.log("onChange", name, value)
     setNewProduct({ ...newProduct, [name]: value })
-    console.log("onChange NewProduct :", newProduct)
   }
 
   // affichage
