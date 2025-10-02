@@ -1,22 +1,27 @@
-import { ComponentProps, useEffect,
-    //  useState 
-    } from "react"
-import Select, { 
-    MultiValue, 
-    // OnChangeValue 
-} from "react-select"
+import { ComponentProps, useEffect } from "react"
+import Select, { MultiValue } from "react-select"
+import { ColorValues } from "@/theme/theme";
+import { getColourStyle } from "./MultiSelectStyle"
 
-type MultiSelectProps<T extends {}> = 
-    ComponentProps<typeof Select<unknown, true>>
+type OptionMustHave = {color: ColorValues, value: string}
+
+type MultiSelectProps<
+    TDomain extends {},
+    TOption extends OptionMustHave
+> = 
+    ComponentProps<typeof Select<TOption, true>>
     & { 
         name: string,
         Icon?: React.ReactNode,
         onFormSelectChange: React.ChangeEventHandler<HTMLSelectElement>,
-        domainObject: T,
-        setDomainObject:  React.Dispatch<React.SetStateAction<T>>,
+        domainObject: TDomain,
+        setDomainObject:  React.Dispatch<React.SetStateAction<TDomain>>,
     }
 
-export const MultiSelect = <T extends {}> ({
+export const MultiSelect = <
+    TDomain extends {},
+    TOption extends OptionMustHave
+> ({
     placeholder, 
     options, 
     Icon, 
@@ -24,24 +29,17 @@ export const MultiSelect = <T extends {}> ({
     name,
     domainObject, // (ex: Product, Menu, ...)
     setDomainObject,
-...propsRest}: MultiSelectProps<T>) => {
-    // const { isFormSubmitted, setFormSubmitted } = useState(false)
+...propsRest}: MultiSelectProps<TDomain, TOption>) => {
     
     useEffect(() => {
         if(!name) return 
         setDomainObject({...domainObject, [name]: options })
     }, [])
-    
-    function isOptionWithValue (object: unknown): object is { value: string } {
-         return typeof object === "object" && object !== null && "value" in object
-    }
 
     const handleSelectChange = ( 
-        newValue: MultiValue<unknown> ,
-        //  newValue: OnChangeValue<unknown, true> ,
+        newValue: MultiValue<TOption> ,
     ) => {
         const valuesSelected = newValue
-            .filter(isOptionWithValue)
             .map((option) => option.value)
         const fakeEvent = {
             target: {
@@ -57,9 +55,10 @@ export const MultiSelect = <T extends {}> ({
         options={options}
         isMulti={true}
         closeMenuOnSelect={false}
-        defaultValue={options}
+        defaultValue={options as MultiValue<TOption>}
         placeholder={placeholder}
         onChange={handleSelectChange}
+        styles={getColourStyle<TOption>()}
         />
     )
 }

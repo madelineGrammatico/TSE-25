@@ -4,9 +4,11 @@ import SelectInput from "@/components/reusable-ui/SelectInput"
 import styled from "styled-components"
 import { getInputTextsConfig, getSelectInputConfig } from "./inputConfig"
 import { Product } from "@/types/Product"
-// import { SelectBadge } from "@/components/reusable-ui/SelectBadge"
 import { MultiSelect } from "@/components/reusable-ui/MultiSelect/MultiSelect"
 import { useOrderContext } from "@/context/OrderContext"
+import { ColorValues } from "@/theme/theme"
+import { IoPricetag } from "react-icons/io5"
+import { BadgeLabelSelect } from "./MultiSelect/BadgeLabelSelect"
 
 export type InputsProps = {
   product: Product
@@ -21,17 +23,15 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
     const inputTexts = getInputTextsConfig(product)
     const inputSelects = getSelectInputConfig(product)
 
-
-
     const { categories, newProduct, setNewProduct} = useOrderContext()
     const optionsCategorie = categories.map((category)=>(
         {
             ...category,
-             value: category.value || "" ,
-             label: category.label || "" 
+            color: category.color as ColorValues,
+            value: (category.value || "") ,
+            label: (category.label || "" ),
         }
     ))
-   
     return (
       <InputsStyled>
         <div className="first-row">
@@ -55,23 +55,22 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
         </div>
         {/* CATEGORIES */}
         <div className="categories">
-          <>
-            {/* <SelectBadge
-              {...inputTexts[2]}
-              onChange={onChange}
-              // version="minimalist"
-              onFocus={onFocus}
-              onBlur={onBlur}
-            /> */}
-            <MultiSelect
-              {...inputTexts[2]}
-              options={optionsCategorie}
-              closeMenuOnSelect={false}
-              onFormSelectChange={onChange? onChange : ()=>{}}
-              domainObject={newProduct}
-              setDomainObject={setNewProduct}
-            />
-          </>
+          <MultiSelect
+            options={optionsCategorie }
+            closeMenuOnSelect={false}
+            onFormSelectChange={onChange? onChange : ()=>{}}
+            domainObject={newProduct}
+            setDomainObject={setNewProduct}
+            name="categories"
+            placeholder="Catégories (ex: Boisson)"
+            Icon= {<IoPricetag />}
+            className="categories"
+            components={{
+              MultiValueLabel: ({data})=> (
+                  <BadgeLabelSelect iconName={data.iconName} label={data.label} color={data.color}/>
+              )
+            }}
+          />
         </div>
         {/* PRICE */}
         <TextInput
