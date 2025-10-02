@@ -6,9 +6,9 @@ import { getInputTextsConfig, getSelectInputConfig } from "./inputConfig"
 import { Product } from "@/types/Product"
 import { MultiSelect } from "@/components/reusable-ui/MultiSelect/MultiSelect"
 import { useOrderContext } from "@/context/OrderContext"
-import { ColorValues } from "@/theme/theme"
 import { IoPricetag } from "react-icons/io5"
 import { BadgeLabelSelect } from "./MultiSelect/BadgeLabelSelect"
+import { GetOptionsCategories } from "./MultiSelect/MultiSelectCategoriesConfig"
 
 export type InputsProps = {
   product: Product
@@ -24,14 +24,7 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
     const inputSelects = getSelectInputConfig(product)
 
     const { categories, newProduct, setNewProduct} = useOrderContext()
-    const optionsCategorie = categories.map((category)=>(
-        {
-            ...category,
-            color: category.color as ColorValues,
-            value: (category.value || "") ,
-            label: (category.label || "" ),
-        }
-    ))
+    
     return (
       <InputsStyled>
         <div className="first-row">
@@ -56,7 +49,7 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
         {/* CATEGORIES */}
         <div className="categories">
           <MultiSelect
-            options={optionsCategorie }
+            options={GetOptionsCategories(categories) }
             closeMenuOnSelect={false}
             onFormSelectChange={onChange? onChange : ()=>{}}
             domainObject={newProduct}
