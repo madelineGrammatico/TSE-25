@@ -3,7 +3,6 @@ import { BadgeLabelSelect } from "@/components/pages/order/Main/MainLeftSide/Adm
 import { OptionMustHave } from "@/components/reusable-ui/MultiSelect/MultiSelect";
 import { IconName } from "@/types/Category";
 
-
 type TOption <T extends OptionMustHave> = T 
 
 export const CustomMultiValueLabel = <T extends OptionMustHave> (

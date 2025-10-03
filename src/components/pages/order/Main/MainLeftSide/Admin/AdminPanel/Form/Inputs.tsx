@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from "react"
+import React from "react"
 import TextInput from "@/components/reusable-ui/TextInput"
 import SelectInput from "@/components/reusable-ui/SelectInput"
 import styled from "styled-components"
@@ -7,48 +7,21 @@ import { Product } from "@/types/Product"
 import { MultiSelect } from "@/components/reusable-ui/MultiSelect/MultiSelect"
 import { useOrderContext } from "@/context/OrderContext"
 import { IoPricetag } from "react-icons/io5"
-import { BadgeLabelSelect } from "./MultiSelect/BadgeLabelSelect"
-import { components, ControlProps, GroupBase, OptionProps } from "react-select";
 import { GetOptionsCategories } from "./MultiSelect/MultiSelectCategoriesConfig"
-import { Category } from "@/types/Category"
 
 export type InputsProps = {
   product: Product
-  // onChange: React.ChangeEventHandler<HTMLInputElement> | React.ChangeEventHandler<HTMLSelectElement>
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>
   onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>
 }
-
-// const CustomMultiValueLabel = (
-//   props: any
-//   ) => (
-//   <components.MultiValueLabel {...props}>
-//     <BadgeLabelSelect 
-//       iconName={props.data.iconName} 
-//       label={props.data.label} 
-//       color={props.data.color}
-//     />
-//   </components.MultiValueLabel>
-// );
-// const CustomOption = (props: OptionProps<Category, true, GroupBase<Category>>
-// ) => (
-//   <components.Option {...props}>
-//     <BadgeLabelSelect 
-//       iconName={props.data.iconName} 
-//       label={props.data.label} 
-//       color={props.data.color}
-//     />
-//   </components.Option>
-// );
-
 
 export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
   ({ product, onChange, onFocus, onBlur }, ref) => {
     const inputTexts = getInputTextsConfig(product)
     const inputSelects = getSelectInputConfig(product)
 
-    const { categories, newProduct, setNewProduct} = useOrderContext()
+    const { categories } = useOrderContext()
     
     return (
       <InputsStyled>
@@ -77,8 +50,6 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
             options={GetOptionsCategories(categories) }
             closeMenuOnSelect={false}
             onFormSelectChange={onChange? onChange : ()=>{}}
-            domainObject={newProduct}
-            setDomainObject={setNewProduct}
             name="categories"
             placeholder="Catégories (ex: Boisson)"
             Icon= {<IoPricetag />}
@@ -110,8 +81,6 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
 )
 
 const InputsStyled = styled.div`
-  /* border: 1px solid red; */
-  /* background: blue; */
   grid-area: 1 / 2 / -2 / 3;
 
   display: grid;
