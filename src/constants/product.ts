@@ -7,6 +7,7 @@ export const EMPTY_PRODUCT: Product = {
   price: 0,
   isAvailable: true,
   isPublicised: false,
+  categories: []
 }
 
 export const IMAGE_COMING_SOON = "/images/no-photo.png"

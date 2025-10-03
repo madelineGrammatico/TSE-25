@@ -4,10 +4,13 @@ import SelectInput from "@/components/reusable-ui/SelectInput"
 import styled from "styled-components"
 import { getInputTextsConfig, getSelectInputConfig } from "./inputConfig"
 import { Product } from "@/types/Product"
+import { MultiSelect } from "@/components/reusable-ui/MultiSelect/MultiSelect"
+import { useOrderContext } from "@/context/OrderContext"
+import { IoPricetag } from "react-icons/io5"
+import { GetOptionsCategories } from "./MultiSelect/MultiSelectCategoriesConfig"
 
 export type InputsProps = {
   product: Product
-  // onChange: React.ChangeEventHandler<HTMLInputElement> | React.ChangeEventHandler<HTMLSelectElement>
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement>
   onFocus?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>
@@ -18,7 +21,8 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
     const inputTexts = getInputTextsConfig(product)
     const inputSelects = getSelectInputConfig(product)
 
-    // affichage
+    const { categories } = useOrderContext()
+    
     return (
       <InputsStyled>
         <div className="first-row">
@@ -42,12 +46,15 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
         </div>
         {/* CATEGORIES */}
         <div className="categories">
-          <TextInput
-            {...inputTexts[2]}
-            onChange={onChange}
-            version="minimalist"
-            onFocus={onFocus}
-            onBlur={onBlur}
+          <MultiSelect
+            options={GetOptionsCategories(categories) }
+            closeMenuOnSelect={false}
+            onFormSelectChange={onChange? onChange : ()=>{}}
+            name="categories"
+            placeholder="Catégories (ex: Boisson)"
+            Icon= {<IoPricetag />}
+            className="categories"
+            getOptionValue={(option) => option.value}
           />
         </div>
         {/* PRICE */}
@@ -74,8 +81,6 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
 )
 
 const InputsStyled = styled.div`
-  /* border: 1px solid red; */
-  /* background: blue; */
   grid-area: 1 / 2 / -2 / 3;
 
   display: grid;

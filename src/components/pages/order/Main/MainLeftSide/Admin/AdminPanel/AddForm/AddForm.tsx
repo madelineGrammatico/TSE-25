@@ -27,7 +27,7 @@ export default function AddForm() {
 
     displaySuccessMessage()
   }
-
+ 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target
     setNewProduct({ ...newProduct, [name]: value })
