@@ -1,9 +1,10 @@
 import { ComponentProps, useEffect } from "react"
-import Select, { components, ControlProps, GroupBase, MultiValue } from "react-select"
+import Select, { components, MultiValue } from "react-select"
 import { ColorValues } from "@/theme/theme";
 import { getColourStyle } from "./MultiSelectStyle"
+import { CustomMultiValueLabel, CustomOption } from "@/components/pages/order/Main/MainLeftSide/Admin/AdminPanel/Form/MultiSelect/SelectCompsants";
 
-type OptionMustHave = {color: ColorValues, value: string}
+export type OptionMustHave = {color: ColorValues, value: string}
 
 type MultiSelectProps<
     TDomain extends {},
@@ -49,14 +50,19 @@ export const MultiSelect = <
         } as unknown as React.ChangeEvent<HTMLSelectElement>
         onFormSelectChange(fakeEvent)
     }
-    const CustomControl = (props: ControlProps<TOption, true, GroupBase<TOption>>) => {
-      const { children } = props
-      return (
-      <components.Control {...props}>
-        {Icon}
-        {children}
-      </components.Control>
-    )}
+    
+   
+    // const CustomMultiValueLabel = (
+    //   props: MultiValueGenericProps<TOption, true, GroupBase<TOption>>
+    //   ) => (
+    //   <components.MultiValueLabel {...props}>
+    //     <BadgeLabelSelect 
+    //       iconName={props.data.iconName} 
+    //       label={props.data.label} 
+    //       color={props.data.color}
+    //     />
+    //   </components.MultiValueLabel>
+    // )
     return(
         <Select {...propsRest} 
         options={options}
@@ -67,7 +73,15 @@ export const MultiSelect = <
         onChange={handleSelectChange}
         styles={getColourStyle<TOption>()}
         components={{
-            Control: CustomControl,
+           
+            MultiValueLabel: CustomMultiValueLabel,
+            Option: CustomOption,
+            Control:({children, ...props}) => (
+                <components.Control {...props}>
+                    {Icon}
+                    {children}
+                </components.Control>
+            )
         }}
         />
     )

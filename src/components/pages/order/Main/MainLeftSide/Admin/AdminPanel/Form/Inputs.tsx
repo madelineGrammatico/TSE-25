@@ -8,9 +8,8 @@ import { MultiSelect } from "@/components/reusable-ui/MultiSelect/MultiSelect"
 import { useOrderContext } from "@/context/OrderContext"
 import { IoPricetag } from "react-icons/io5"
 import { BadgeLabelSelect } from "./MultiSelect/BadgeLabelSelect"
-import { components, ControlProps, GroupBase } from "react-select";
+import { components, ControlProps, GroupBase, OptionProps } from "react-select";
 import { GetOptionsCategories } from "./MultiSelect/MultiSelectCategoriesConfig"
-import { getCategoryIcon } from "@/utils/icon"
 import { Category } from "@/types/Category"
 
 export type InputsProps = {
@@ -21,24 +20,27 @@ export type InputsProps = {
   onBlur?: React.FocusEventHandler<HTMLInputElement | HTMLSelectElement>
 }
 
-const CustomMultiValueLabel = (props: any) => (
-  <components.MultiValueLabel {...props}>
-    <BadgeLabelSelect 
-      iconName={props.data.iconName} 
-      label={props.data.label} 
-      color={props.data.color}
-    />
-  </components.MultiValueLabel>
-);
-const CustomOption = (props: any) => (
-  <components.Option {...props}>
-    <BadgeLabelSelect 
-      iconName={props.data.iconName} 
-      label={props.data.label} 
-      color={props.data.color}
-    />
-  </components.Option>
-);
+// const CustomMultiValueLabel = (
+//   props: any
+//   ) => (
+//   <components.MultiValueLabel {...props}>
+//     <BadgeLabelSelect 
+//       iconName={props.data.iconName} 
+//       label={props.data.label} 
+//       color={props.data.color}
+//     />
+//   </components.MultiValueLabel>
+// );
+// const CustomOption = (props: OptionProps<Category, true, GroupBase<Category>>
+// ) => (
+//   <components.Option {...props}>
+//     <BadgeLabelSelect 
+//       iconName={props.data.iconName} 
+//       label={props.data.label} 
+//       color={props.data.color}
+//     />
+//   </components.Option>
+// );
 
 
 export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
@@ -82,12 +84,6 @@ export const Inputs = React.forwardRef<HTMLInputElement, InputsProps>(
             Icon= {<IoPricetag />}
             className="categories"
             getOptionValue={(option) => option.value}
-            components={{
-              MultiValueLabel: CustomMultiValueLabel,
-              Option: CustomOption,
-              
-
-            }}
           />
         </div>
         {/* PRICE */}
